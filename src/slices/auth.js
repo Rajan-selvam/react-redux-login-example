@@ -1,4 +1,4 @@
-import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice , createAsyncThunk, configureStore } from "@reduxjs/toolkit";
 import AuthService from "../services/auth.service";
 import { setMessage } from "./message";
 
@@ -61,5 +61,10 @@ const authSlice = createSlice({
     },
 });
 
-const { reducer } = authSlice;
-export default reducer;
+const store = configureStore({
+    reducer : authSlice.extraReducers
+});
+
+const authActions = authSlice.actions;
+
+export default store;
