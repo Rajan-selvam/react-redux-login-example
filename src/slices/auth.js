@@ -3,7 +3,7 @@ import AuthService from "../services/auth.service";
 import { setMessage } from "./message";
 import messageSlice from "./message";
 
-const user = JSON.parse(localStorage.getItem("user"));
+let user = JSON.parse(localStorage.getItem("user"));
 
 export const register = createAsyncThunk(
     "auth/register",
@@ -32,7 +32,7 @@ export const login = createAsyncThunk(
                 error.response.data &&
                 error.response.data.message) || error.message || error.toString();
            thunkAPI.dispatch(setMessage(message));
-        //    return thunkAPI.rejectWithValue();
+           return thunkAPI.rejectWithValue();
         }
     }
 );

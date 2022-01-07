@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { register } from "../slices/auth";
 import { clearMessage } from "../slices/message";
 
-const Register = () => {
+const Register = (props) => {
     const [successful,setSuccessful] = useState(false);
     const { message } = useSelector((state)=>state.message);
     const dispatch = useDispatch();
@@ -49,6 +49,8 @@ const Register = () => {
         dispatch(register({username,email,password}))
         .unwrap().then(()=>{
             setSuccessful(true);
+            props.history.push("/profile");
+            window.location.reload();
         })
         .catch(()=>{
             setSuccessful(false);
