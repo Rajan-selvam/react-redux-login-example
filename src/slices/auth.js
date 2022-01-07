@@ -1,6 +1,7 @@
 import { createSlice , createAsyncThunk, configureStore } from "@reduxjs/toolkit";
 import AuthService from "../services/auth.service";
 import { setMessage } from "./message";
+import messageSlice from "./message";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,7 +22,7 @@ export const register = createAsyncThunk(
     }
 );
 export const login = createAsyncThunk(
-    "auth/login",
+    "auth/Login",
     async({username,password},thunkAPI) => {
         try{
             const data = await AuthService.login(username,password);
@@ -31,7 +32,7 @@ export const login = createAsyncThunk(
                 error.response.data &&
                 error.response.data.message) || error.message || error.toString();
            thunkAPI.dispatch(setMessage(message));
-           return thunkAPI.rejectWithValue();
+        //    return thunkAPI.rejectWithValue();
         }
     }
 );
@@ -62,9 +63,9 @@ const authSlice = createSlice({
 });
 
 const store = configureStore({
-    reducer : authSlice.extraReducers
+    reducer :{ auth : authSlice.reducer, message : messageSlice.reducer }
 });
 
-const authActions = authSlice.actions;
+export const authActions = authSlice.actions;
 
 export default store;

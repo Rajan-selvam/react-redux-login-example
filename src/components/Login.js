@@ -11,6 +11,7 @@ const Login = (props) => {
     const [loading, setLoading] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { message } = useSelector((state)=> state.message);
+
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -30,7 +31,6 @@ const Login = (props) => {
         setLoading(true);
 
         dispatch(login({username,password}))
-        .unwrap()
         .then(() => {
             props.history.push("/profile");
             window.location.reload();
@@ -83,12 +83,12 @@ const Login = (props) => {
                     </Form>
                 </Formik>
             </div>
-            {message && (<div className="form-group">
+            {/* {message && (<div className="form-group">
                 <div className="alert alert-danger" role="alert">
                     {message}
                 </div>
                 </div>
-                )}
+                )} */}
         </div>
     );
 }

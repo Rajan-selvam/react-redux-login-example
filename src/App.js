@@ -15,7 +15,7 @@ import BoardAdmin from "./components/BoardAdmin";
 
 import {logout} from "./slices/auth";
 
-import EventBus from "./common/EventBus";
+// import EventBus from "./common/EventBus";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -37,12 +37,12 @@ const App = () => {
       setShowAdminBoard(false);
     }
 
-    EventBus.on("logout", () => {
-      logOut();
-    });
+    // EventBus.on("logout", () => {
+    //   logOut();
+    // });
 
     return () => {
-      EventBus.remove("logout");
+      // EventBus.remove("logout");
     };
   }, [currentUser, logOut]);
 
@@ -51,7 +51,7 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          bezKoder
+          
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">

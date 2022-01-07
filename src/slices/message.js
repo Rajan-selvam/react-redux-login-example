@@ -15,8 +15,7 @@ const messageSlice = createSlice({
     },
 });
 
-const { reducers, actions } = messageSlice;
 
-export const {setMessage,clearMessage} = actions;
+export const {setMessage,clearMessage} = messageSlice.actions;
 
-export default reducers;
+export default messageSlice;
