@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import  { Redirect } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { login } from "../slices/auth";
 import { clearMessage } from "../slices/message";
+import "../css/login.css";
 
-const Login = (props) => {
+const Login = () => {
     const [loading, setLoading] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const { message } = useSelector((state)=> state.message);
 
     const dispatch = useDispatch();
 
@@ -31,11 +33,12 @@ const Login = (props) => {
         setLoading(true);
 
         dispatch(login({username,password}))
-        .then(() => {
-            props.history.push("/profile");
-            window.location.reload();
-        })
-        .catch(()=>{
+        .then((res) => {
+            let message = res.error?'Credentials Mismatched':'Kindly Refresh the Screen';
+            toast(message);
+            if(!res.error) {
+                <Redirect to="/profile"/>;
+            }
             setLoading(false);
         });
     };
@@ -44,10 +47,13 @@ const Login = (props) => {
     }
     return (
         <div className="col-md-12 login-form">
-            <div className="card card-container">
-                <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                     alt="profile-img"
-                className="profile-img-card"/>
+            <div className="box">
+                <ToastContainer />
+                <div className="graphic1"></div>
+                <div className="graphic2"></div>
+                <div className="graphic3"></div>
+                <div className="graphic4"></div>
+
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -72,7 +78,7 @@ const Login = (props) => {
                                 className="alert alert-danger"
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group button">
                             <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
                                 {loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
@@ -82,6 +88,8 @@ const Login = (props) => {
                         </div>
                     </Form>
                 </Formik>
+                <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
             </div>
             {/* {message && (<div className="form-group">
                 <div className="alert alert-danger" role="alert">
@@ -92,5 +100,4 @@ const Login = (props) => {
         </div>
     );
 }
-
 export default Login;

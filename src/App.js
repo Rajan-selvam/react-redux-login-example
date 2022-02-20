@@ -12,6 +12,7 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
+import Products from "./components/Products";
 
 import {logout} from "./slices/auth";
 
@@ -36,16 +37,9 @@ const App = () => {
       setShowModeratorBoard(false);
       setShowAdminBoard(false);
     }
-
-    // EventBus.on("logout", () => {
-    //   logOut();
-    // });
-
-    return () => {
-      // EventBus.remove("logout");
-    };
   }, [currentUser, logOut]);
 
+  const productPage = currentUser || showAdminBoard || showModeratorBoard;
   return (
     <Router>
     <div>
@@ -80,6 +74,14 @@ const App = () => {
             <li className="nav-item">
               <Link to={"/user"} className="nav-link">
                 User
+              </Link>
+            </li>
+          )}
+
+          {productPage && (
+            <li className="nav-item">
+              <Link to={"/products"} className="nav-link">
+                Product
               </Link>
             </li>
           )}
@@ -124,6 +126,7 @@ const App = () => {
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />
+          <Route path="/products" component={Products} />
         </Switch>
       </div>
     </div>

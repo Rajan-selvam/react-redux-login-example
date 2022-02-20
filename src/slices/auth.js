@@ -1,7 +1,6 @@
-import { createSlice , createAsyncThunk, configureStore } from "@reduxjs/toolkit";
+import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 import AuthService from "../services/auth.service";
 import { setMessage } from "./message";
-import messageSlice from "./message";
 
 let user = JSON.parse(localStorage.getItem("user"));
 
@@ -50,8 +49,8 @@ const authSlice = createSlice({
         [register.rejected] : (state,action) => {
             state.isLoggedIn = false;
         },
-        [login.fulfilled] : (state,action) => {
-            state.isLoggedIn = true;
+        [login.fulfilled] : (state) => {
+            // state.isLoggedIn = true;
         },
         [login.rejected] : (state,action) => {
             state.isLoggedIn = false;
@@ -62,10 +61,6 @@ const authSlice = createSlice({
     },
 });
 
-const store = configureStore({
-    reducer :{ auth : authSlice.reducer, message : messageSlice.reducer }
-});
-
 export const authActions = authSlice.actions;
 
-export default store;
+export default authSlice;
